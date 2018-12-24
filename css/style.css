@@ -7,3 +7,19 @@ button {
     margin-top: 10px;
     width: 100px;
 }
+
+#goalInput span {
+    width : 10px;
+}
+
+#goalInput input {
+    width : 15px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+#goalInput .arrow, .fxSymbol {
+    width : 45px !important;
+    margin-left: 5px;
+}
+
