@@ -13,7 +13,7 @@ button {
 }
 
 #goalInput input {
-    width : 15px;
+    width : 30px;
     margin-right: 5px;
     margin-left: 5px;
 }
@@ -22,4 +22,19 @@ button {
     width : 45px !important;
     margin-left: 5px;
 }
+
+#restrictionsInput span {
+    width : 10px;
+}
+
+#restrictionsInput input {
+    width : 30px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+/*#goalRestrictionsInput .arrow, .fxSymbol {*/
+    /*width : 45px !important;*/
+    /*margin-left: 5px;*/
+/*}*/
 
