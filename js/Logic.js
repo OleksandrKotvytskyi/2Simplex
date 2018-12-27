@@ -1,13 +1,13 @@
 function Logic(goalFunc, matrix, freeItems) {
     var i;
 
-    // this.goalFunc = [-1, -1, 0, 0, 0, 0];
-    // this.matrix =[[0, 0, 1, -6, 1, 0], [0, 1, 0, 4/9, -1/9, 0], [1, 0, 0, 5/9, 1/9, 0], [0, 0, 0, -5/9, -1/9, 1]];
-    // this.freeItems = [1, 23/9, 40/9, -4/9];
+    this.goalFunc = [-1, -1, 0, 0, 0, 0];
+    this.matrix =[[0, 0, 1, -6, 1, 0], [0, 1, 0, 4/9, -1/9, 0], [1, 0, 0, 5/9, 1/9, 0], [0, 0, 0, -5/9, -1/9, 1]];
+    this.freeItems = [1, 23/9, 40/9, -4/9];
 
-    this.goalFunc = goalFunc;
-    this.matrix = matrix;
-    this.freeItems = freeItems;
+    // this.goalFunc = goalFunc;
+    // this.matrix = matrix;
+    // this.freeItems = freeItems;
 
     this.basisIndexes = [];
     this.marks = [];
@@ -24,19 +24,28 @@ function Logic(goalFunc, matrix, freeItems) {
 }
 
 Logic.prototype.doAlgorithm = function () {
+    debugger;
+
     this.findBasisIndexes();
     this.calcMarks();
     this.findGoalFunctionMark();
+
     console.log('free items: ', this.checkFreeItems());
     console.log('marks: ', this.checkMarks());
     for(;;){
-        if (!this.checkFreeItems()){
-            alert("Немає від'ємних вільних членів");
-            return this.getAnswer();
-        }
         if (!this.checkMarks()) {
             alert("Є додатні оцінки");
             break;
+        }
+
+        if (!this.checkElementsWithNegativeFreeItems()) {
+            alert("Є додатні оцінки");
+            break;
+        }
+
+        if (!this.checkFreeItems()){
+            alert("Немає від'ємних вільних членів");
+            return this.getAnswer();
         }
 
         console.log(this.findNewBasis());
@@ -103,6 +112,28 @@ Logic.prototype.checkFreeItems = function () {
     }
 
     return bFreeItems;
+};
+
+Logic.prototype.checkElementsWithNegativeFreeItems = function () {
+    var i, j,
+        negativeFreeItemsIndexes = [];
+
+    for (i = 0; i < this.freeItems.length; i++) {
+        if (this.freeItems[i] < 0) {
+            negativeFreeItemsIndexes.push(i);
+            break;
+        }
+    }
+
+    for (i = 0; i < negativeFreeItemsIndexes.length; i++) {
+        for (j = 0; j < this.matrix[0].length; j++) {
+            if (this.matrix[negativeFreeItemsIndexes[i]][j] < 0) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 };
 
 Logic.prototype.checkMarks = function () {

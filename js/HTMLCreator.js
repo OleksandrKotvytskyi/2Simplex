@@ -98,7 +98,7 @@ HTMLCreator.prototype.createRestrictionsView = function () {
 };
 
 HTMLCreator.prototype.onStartClick = function (e) {
-    var i, j, k, childNode, fraction, logic, answer;
+    var i, j, k, childNode, fraction, logic, answer,
         goalFunc = [], freeItems = [], matrix = [], tmpArr = [],
         goalFuncInput = document.getElementById('goalInput'),
         restrictionsInput = document.getElementById('restrictionsInput');
@@ -115,6 +115,8 @@ HTMLCreator.prototype.onStartClick = function (e) {
     for (i = 0; i < goalFuncInput.childNodes.length; i++) {
         childNode = goalFuncInput.childNodes[i];
         if (childNode.id) {
+            // fraction = math.fraction(document.getElementById(childNode.id).value);
+            // goalFunc.push(fraction.n/fraction.d * fraction.s);
             goalFunc.push(math.number(document.getElementById(childNode.id).value));
         }
     }
