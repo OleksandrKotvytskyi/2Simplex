@@ -1,13 +1,13 @@
 function Logic(goalFunc, matrix, freeItems) {
     var i;
 
-    this.goalFunc = [-1, -1, 0, 0, 0, 0];
-    this.matrix =[[0, 0, 1, -6, 1, 0], [0, 1, 0, 4/9, -1/9, 0], [1, 0, 0, 5/9, 1/9, 0], [0, 0, 0, -5/9, -1/9, 1]];
-    this.freeItems = [1, 23/9, 40/9, -4/9];
+    // this.goalFunc = [-1, -1, 0, 0, 0, 0];
+    // this.matrix =[[0, 0, 1, -6, 1, 0], [0, 1, 0, 4/9, -1/9, 0], [1, 0, 0, 5/9, 1/9, 0], [0, 0, 0, -5/9, -1/9, 1]];
+    // this.freeItems = [1, 23/9, 40/9, -4/9];
 
-    // this.goalFunc = goalFunc;
-    // this.matrix = matrix;
-    // this.freeItems = freeItems;
+    this.goalFunc = goalFunc;
+    this.matrix = matrix;
+    this.freeItems = freeItems;
 
     this.basisIndexes = [];
     this.marks = [];
@@ -38,8 +38,8 @@ Logic.prototype.doAlgorithm = function () {
             break;
         }
 
-        if (!this.checkElementsWithNegativeFreeItems()) {
-            alert("Є додатні оцінки");
+        if (!this.checkElementsWithNegativeFreeItems() && this.checkFreeItems()) {
+            alert("Навпроти від'ємного вільного члена не має від'ємних елементів");
             break;
         }
 
