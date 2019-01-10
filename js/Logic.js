@@ -5,11 +5,24 @@ function Logic(goalFunc, matrix, freeItems) {
     // this.matrix =[[0, 0, 1, -6, 1, 0], [0, 1, 0, 4/9, -1/9, 0], [1, 0, 0, 5/9, 1/9, 0], [0, 0, 0, -5/9, -1/9, 1]];
     // this.freeItems = [1, 23/9, 40/9, -4/9];
 
+    // this.goalFunc = [2, 3, 0, 0, 0];
+    // this.matrix =[[1, -1, 1, 0, 0], [-2, -3, 0, 1, 0], [-4, 2, 0, 0, 1]];
+    // this.freeItems = [2, -5, -3];
+
+    // this.goalFunc = [2, 1, 0, 0, 0];
+    // this.matrix =[[-3, -1, 1, 0, 0], [-4, -3, 0, 1, 0], [1, 2, 0, 0, 1]];
+    // this.freeItems = [-3, -6, 3];
+
+    // this.goalFunc = [1, 1, 0, 0, 0];
+    // this.matrix =[[0, 1, 1, 0, 0], [-1, -1/2, 0, 1, 0], [-1/3, -2, 0, 0, 1]];
+    // this.freeItems = [4, -3, -12];
+
     this.goalFunc = goalFunc;
     this.matrix = matrix;
     this.freeItems = freeItems;
 
     this.basisIndexes = [];
+    this.trueBasisIndexes = [];
     this.marks = [];
     this.goalFuncValue;
 
@@ -24,32 +37,37 @@ function Logic(goalFunc, matrix, freeItems) {
 }
 
 Logic.prototype.doAlgorithm = function () {
-    debugger;
+    var me = this;
 
-    this.findBasisIndexes();
-    this.calcMarks();
-    this.findGoalFunctionMark();
+    me.findBasisIndexes();
 
-    console.log('free items: ', this.checkFreeItems());
-    console.log('marks: ', this.checkMarks());
+    me.basisIndexes.forEach(function (item) {
+        me.trueBasisIndexes.push(item);
+    });
+
+    me.calcMarks();
+    me.findGoalFunctionMark();
+
+    console.log('free items: ', me.checkFreeItems());
+    console.log('marks: ', me.checkMarks());
     for(;;){
-        if (!this.checkMarks()) {
+        if (!me.checkMarks()) {
             alert("Є додатні оцінки");
             break;
         }
 
-        if (!this.checkElementsWithNegativeFreeItems() && this.checkFreeItems()) {
+        if (!me.checkElementsWithNegativeFreeItems() && me.checkFreeItems()) {
             alert("Навпроти від'ємного вільного члена не має від'ємних елементів");
             break;
         }
 
-        if (!this.checkFreeItems()){
+        if (!me.checkFreeItems()){
             alert("Немає від'ємних вільних членів");
-            return this.getAnswer();
+            return me.getAnswer();
         }
 
-        console.log(this.findNewBasis());
-        this.doGauss();
+        console.log(me.findNewBasis());
+        me.doGauss();
     }
 };
 
@@ -266,10 +284,10 @@ Logic.prototype.getAnswer = function () {
         }
     }
 
-    for (i = 0; i < this.basisIndexes.length; i++) {
-        for (j = 0; j < goalFuncAnswerIndexes.length; j++) {
-            if (this.basisIndexes[i] === goalFuncAnswerIndexes[j]) {
-                answer.coords.push(this.convertedFreeItems[i]);
+    for (i = 0; i < goalFuncAnswerIndexes.length; i++) {
+        for (j = 0; j < this.basisIndexes.length; j++) {
+            if (goalFuncAnswerIndexes[i] === this.basisIndexes[j]) {
+                answer.coords.push(this.convertedFreeItems[j]);
             }
         }
     }
